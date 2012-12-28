@@ -60,10 +60,18 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                 {
                     [qtz setValue: NO forInputKey: @"displayNumbers"];
                 }
+                else
+                {
+                    [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"displayNumbers"];
+                }
                 
                 if (![defaults boolForKey: @"timeAsBackgroundColor"])
                 {
                     [qtz setValue: NO forInputKey: @"timeAsBackgroundColor"];
+                }
+                else
+                {
+                    [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"timeAsBackgroundColor"];
                 }
                 
                 [self addSubview: qtz];
@@ -141,12 +149,20 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
     {
         [qtz setValue: NO forInputKey: @"displayNumbers"];
     }
+    else
+    {
+        [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"displayNumbers"];
+    }
     
     if (![defaults boolForKey: @"timeAsBackgroundColor"])
     {
         [qtz setValue: NO forInputKey: @"timeAsBackgroundColor"];
     }
-    
+    else
+    {
+        [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"timeAsBackgroundColor"];
+    }
+
     [[NSApplication sharedApplication] endSheet:configSheet];
 }
 
