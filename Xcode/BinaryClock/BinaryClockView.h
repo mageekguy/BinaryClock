@@ -16,6 +16,7 @@
     IBOutlet id configSheet;
    
     
+    IBOutlet NSButton *timeAsBackgroundColor;
     IBOutlet NSButton *displayNumbers;
     IBOutlet NSColorWell *numberMorningColorWell;
     IBOutlet NSColorWell *numberAfternoonColorWell;

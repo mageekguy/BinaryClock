@@ -35,6 +35,7 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                             [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 0.0 green: 1.0 blue: 0.0 alpha: 1]], @"ledMorningColor",
                             [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 0.0 blue: 1.0 alpha: 1]], @"ledAfternoonColor",
                             @"1", @"displayNumbers",
+                            @"1", @"timeAsBackgroundColor",
                             nil
                         ]
                  ];
@@ -58,6 +59,11 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                 if (![defaults boolForKey: @"displayNumbers"])
                 {
                     [qtz setValue: NO forInputKey: @"displayNumbers"];
+                }
+                
+                if (![defaults boolForKey: @"timeAsBackgroundColor"])
+                {
+                    [qtz setValue: NO forInputKey: @"timeAsBackgroundColor"];
                 }
                 
                 [self addSubview: qtz];
@@ -122,6 +128,7 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
     [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledMorningColor] forKey: @"ledMorningColor"];
     [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledAfternoonColor] forKey: @"ledAfternoonColor"];
     [defaults setBool: [displayNumbers state] forKey: @"displayNumbers"];
+    [defaults setBool: [timeAsBackgroundColor state] forKey: @"timeAsBackgroundColor"];
     
     [defaults synchronize];
     
@@ -133,6 +140,11 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
     if (![defaults boolForKey: @"displayNumbers"])
     {
         [qtz setValue: NO forInputKey: @"displayNumbers"];
+    }
+    
+    if (![defaults boolForKey: @"timeAsBackgroundColor"])
+    {
+        [qtz setValue: NO forInputKey: @"timeAsBackgroundColor"];
     }
     
     [[NSApplication sharedApplication] endSheet:configSheet];
