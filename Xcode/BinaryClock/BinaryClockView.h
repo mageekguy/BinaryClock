@@ -15,6 +15,8 @@
     
     IBOutlet id configSheet;
    
+    
+    IBOutlet NSButton *displayNumbers;
     IBOutlet NSColorWell *numberMorningColorWell;
     IBOutlet NSColorWell *numberAfternoonColorWell;
     IBOutlet NSColorWell *ledMorningColorWell;
