@@ -117,7 +117,7 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
     
     [numberMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberMorningColor"]]];
     [numberAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberAfternoonColor"]]];
-    [ledMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberMorningColor"]]];
+    [ledMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledMorningColor"]]];
     [ledAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledAfternoonColor"]]];
     [displayNumbers setState: [defaults boolForKey: @"displayNumbers"]];
     
