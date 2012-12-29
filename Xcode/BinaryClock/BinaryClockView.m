@@ -30,10 +30,10 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                 ScreenSaverDefaults *defaults = [ScreenSaverDefaults defaultsForModuleWithName: BinaryClockName];
                 
                 [defaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSKeyedArchiver archivedDataWithRootObject: [NSColor colorWithDeviceRed: 0.0 green: 1.0 blue: 0.0 alpha: 1]], @"numberMorningColor",
-                            [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 0.0 blue: 1.0 alpha: 1]], @"numberAfternoonColor",
-                            [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 0.0 green: 1.0 blue: 0.0 alpha: 1]], @"ledMorningColor",
-                            [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 0.0 blue: 1.0 alpha: 1]], @"ledAfternoonColor",
+                            [NSKeyedArchiver archivedDataWithRootObject: [NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"numberMorningColor",
+                            [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"numberAfternoonColor",
+                            [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"ledMorningColor",
+                            [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"ledAfternoonColor",
                             @"1", @"displayNumbers",
                             @"1", @"timeAsBackgroundColor",
                             nil
