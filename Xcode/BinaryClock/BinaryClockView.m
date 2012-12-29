@@ -46,32 +46,30 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                 NSColor *numberAfternoonColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberAfternoonColor"]];
                 NSColor *ledMorningColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledMorningColor"]];
                 NSColor *ledAfternoonColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledAfternoonColor"]];
-                
-                [qtz setAutostartsRendering: YES];
+
                 [qtz loadCompositionFromFile: qtzComposition];
-                [qtz setAutoresizingMask: (NSViewWidthSizable|NSViewHeightSizable)];
                 [qtz setMaxRenderingFrameRate: 30.0f];
                 [qtz setValue: numberMorningColor forInputKey: @"numberMorningColor"];
                 [qtz setValue: numberAfternoonColor forInputKey: @"numberAfternoonColor"];
                 [qtz setValue: ledMorningColor forInputKey: @"ledMorningColor"];
                 [qtz setValue: ledAfternoonColor forInputKey: @"ledAfternoonColor"];
                 
-                if (![defaults boolForKey: @"displayNumbers"])
+                if ([defaults boolForKey: @"displayNumbers"])
                 {
-                    [qtz setValue: NO forInputKey: @"displayNumbers"];
+                    [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayNumbers"];
                 }
                 else
                 {
-                    [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"displayNumbers"];
+                    [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayNumbers"];
                 }
                 
-                if (![defaults boolForKey: @"timeAsBackgroundColor"])
+                if ([defaults boolForKey: @"timeAsBackgroundColor"])
                 {
-                    [qtz setValue: NO forInputKey: @"timeAsBackgroundColor"];
+                    [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"timeAsBackgroundColor"];
                 }
                 else
                 {
-                    [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"timeAsBackgroundColor"];
+                    [qtz setValue: [NSNumber numberWithBool: NO] forInputKey: @"timeAsBackgroundColor"];
                 }
                 
                 [self addSubview: qtz];
@@ -86,11 +84,15 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
 
 - (void)startAnimation
 {
+    [qtz startRendering];
+    
     [super startAnimation];
 }
 
 - (void)stopAnimation
 {
+    [qtz stopRendering];
+    
     [super stopAnimation];
 }
 
