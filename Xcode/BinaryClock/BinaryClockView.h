@@ -14,10 +14,9 @@
     QCView* qtz;
     
     IBOutlet id configSheet;
-   
-    
     IBOutlet NSButton *timeAsBackgroundColor;
     IBOutlet NSButton *displayNumbers;
+    IBOutlet NSButton *displayHalos;
     IBOutlet NSColorWell *numberMorningColorWell;
     IBOutlet NSColorWell *numberAfternoonColorWell;
     IBOutlet NSColorWell *ledMorningColorWell;

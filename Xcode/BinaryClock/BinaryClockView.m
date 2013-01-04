@@ -35,6 +35,7 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                             [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"ledMorningColor",
                             [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"ledAfternoonColor",
                             @"1", @"displayNumbers",
+                            @"1", @"displayHalos",
                             @"1", @"timeAsBackgroundColor",
                             nil
                         ]
@@ -62,7 +63,16 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                 {
                     [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayNumbers"];
                 }
-                
+
+                if ([defaults boolForKey: @"displayHalos"])
+                {
+                    [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayHalos"];
+                }
+                else
+                {
+                    [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayHalos"];
+                }
+
                 if ([defaults boolForKey: @"timeAsBackgroundColor"])
                 {
                     [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"timeAsBackgroundColor"];
@@ -119,7 +129,9 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
     [numberAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberAfternoonColor"]]];
     [ledMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledMorningColor"]]];
     [ledAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledAfternoonColor"]]];
+    [timeAsBackgroundColor setState: [defaults boolForKey: @"timeAsBackgroundColor"]];
     [displayNumbers setState: [defaults boolForKey: @"displayNumbers"]];
+    [displayHalos setState: [defaults boolForKey: @"displayHalos"]];
     
     return configSheet;
 }
@@ -137,8 +149,9 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
 	[defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: numberAfternoonColor] forKey: @"numberAfternoonColor"];
     [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledMorningColor] forKey: @"ledMorningColor"];
     [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledAfternoonColor] forKey: @"ledAfternoonColor"];
-    [defaults setBool: [displayNumbers state] forKey: @"displayNumbers"];
     [defaults setBool: [timeAsBackgroundColor state] forKey: @"timeAsBackgroundColor"];
+    [defaults setBool: [displayNumbers state] forKey: @"displayNumbers"];
+    [defaults setBool: [displayHalos state] forKey: @"displayHalos"];
     
     [defaults synchronize];
     
@@ -147,22 +160,31 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
     [qtz setValue: ledMorningColor forInputKey: @"ledMorningColor"];
     [qtz setValue: ledAfternoonColor forInputKey: @"ledAfternoonColor"];
     
-    if (![defaults boolForKey: @"displayNumbers"])
+    if ([defaults boolForKey: @"displayNumbers"])
     {
-        [qtz setValue: NO forInputKey: @"displayNumbers"];
+        [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayNumbers"];
     }
     else
     {
-        [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"displayNumbers"];
+        [qtz setValue: [NSNumber numberWithBool: NO] forInputKey: @"displayNumbers"];
     }
     
-    if (![defaults boolForKey: @"timeAsBackgroundColor"])
+    if ([defaults boolForKey: @"displayHalos"])
     {
-        [qtz setValue: NO forInputKey: @"timeAsBackgroundColor"];
+        [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayHalos"];
     }
     else
     {
-        [qtz setValue: [NSNumber numberWithBool:YES] forInputKey: @"timeAsBackgroundColor"];
+        [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayHalos"];
+    }
+    
+    if ([defaults boolForKey: @"timeAsBackgroundColor"])
+    {
+        [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"timeAsBackgroundColor"];
+    }
+    else
+    {
+        [qtz setValue: [NSNumber numberWithBool: NO] forInputKey: @"timeAsBackgroundColor"];
     }
 
     [[NSApplication sharedApplication] endSheet:configSheet];
