@@ -27,9 +27,16 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
 
             if (qtz)
             {
-                ScreenSaverDefaults *defaults = [ScreenSaverDefaults defaultsForModuleWithName: BinaryClockName];
+                [qtz loadCompositionFromFile: qtzComposition];
+                [qtz setMaxRenderingFrameRate: 30.0f];
                 
-                [defaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
+                [self addSubview: qtz];
+                
+                defaults = [ScreenSaverDefaults defaultsForModuleWithName: BinaryClockName];
+                
+                if (defaults)
+                {
+                    [defaults registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
                             [NSKeyedArchiver archivedDataWithRootObject: [NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"numberMorningColor",
                             [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"numberAfternoonColor",
                             [NSKeyedArchiver archivedDataWithRootObject:[NSColor colorWithDeviceRed: 1.0 green: 1.0 blue: 1.0 alpha: 1]], @"ledMorningColor",
@@ -39,52 +46,10 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
                             @"1", @"timeAsBackgroundColor",
                             nil
                         ]
-                 ];
+                     ];
                     
-                [defaults synchronize];
-                
-                NSColor *numberMorningColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberMorningColor"]];
-                NSColor *numberAfternoonColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberAfternoonColor"]];
-                NSColor *ledMorningColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledMorningColor"]];
-                NSColor *ledAfternoonColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledAfternoonColor"]];
-
-                [qtz loadCompositionFromFile: qtzComposition];
-                [qtz setMaxRenderingFrameRate: 30.0f];
-                [qtz setValue: numberMorningColor forInputKey: @"numberMorningColor"];
-                [qtz setValue: numberAfternoonColor forInputKey: @"numberAfternoonColor"];
-                [qtz setValue: ledMorningColor forInputKey: @"ledMorningColor"];
-                [qtz setValue: ledAfternoonColor forInputKey: @"ledAfternoonColor"];
-                
-                if ([defaults boolForKey: @"displayNumbers"])
-                {
-                    [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayNumbers"];
+                    [defaults synchronize];
                 }
-                else
-                {
-                    [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayNumbers"];
-                }
-
-                if ([defaults boolForKey: @"displayHalos"])
-                {
-                    [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayHalos"];
-                }
-                else
-                {
-                    [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayHalos"];
-                }
-
-                if ([defaults boolForKey: @"timeAsBackgroundColor"])
-                {
-                    [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"timeAsBackgroundColor"];
-                }
-                else
-                {
-                    [qtz setValue: [NSNumber numberWithBool: NO] forInputKey: @"timeAsBackgroundColor"];
-                }
-                
-                [self addSubview: qtz];
-                
-                [qtz release];
             }
         }
     }
@@ -94,6 +59,46 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
 
 - (void)startAnimation
 {
+    if (defaults)
+    {
+        NSColor *numberMorningColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberMorningColor"]];
+        NSColor *numberAfternoonColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberAfternoonColor"]];
+        NSColor *ledMorningColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledMorningColor"]];
+        NSColor *ledAfternoonColor = (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledAfternoonColor"]];
+        
+        [qtz setValue: numberMorningColor forInputKey: @"numberMorningColor"];
+        [qtz setValue: numberAfternoonColor forInputKey: @"numberAfternoonColor"];
+        [qtz setValue: ledMorningColor forInputKey: @"ledMorningColor"];
+        [qtz setValue: ledAfternoonColor forInputKey: @"ledAfternoonColor"];
+        
+        if ([defaults boolForKey: @"displayNumbers"])
+        {
+            [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayNumbers"];
+        }
+        else
+        {
+            [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayNumbers"];
+        }
+        
+        if ([defaults boolForKey: @"displayHalos"])
+        {
+            [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayHalos"];
+        }
+        else
+        {
+            [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayHalos"];
+        }
+        
+        if ([defaults boolForKey: @"timeAsBackgroundColor"])
+        {
+            [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"timeAsBackgroundColor"];
+        }
+        else
+        {
+            [qtz setValue: [NSNumber numberWithBool: NO] forInputKey: @"timeAsBackgroundColor"];
+        }
+    }
+
     [qtz startRendering];
     
     [super startAnimation];
@@ -123,17 +128,32 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
         [NSBundle loadNibNamed: @"ConfigSheet" owner: self];
     }
  
-    ScreenSaverDefaults *defaults = [ScreenSaverDefaults defaultsForModuleWithName: BinaryClockName];
-    
-    [numberMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberMorningColor"]]];
-    [numberAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberAfternoonColor"]]];
-    [ledMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledMorningColor"]]];
-    [ledAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledAfternoonColor"]]];
-    [timeAsBackgroundColor setState: [defaults boolForKey: @"timeAsBackgroundColor"]];
-    [displayNumbers setState: [defaults boolForKey: @"displayNumbers"]];
-    [displayHalos setState: [defaults boolForKey: @"displayHalos"]];
+    if (defaults)
+    {
+        [numberMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberMorningColor"]]];
+        [numberAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"numberAfternoonColor"]]];
+        [ledMorningColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledMorningColor"]]];
+        [ledAfternoonColorWell setColor: (NSColor*)[NSKeyedUnarchiver unarchiveObjectWithData: [defaults dataForKey: @"ledAfternoonColor"]]];
+        [timeAsBackgroundColor setState: [defaults boolForKey: @"timeAsBackgroundColor"]];
+        [displayNumbers setState: [defaults boolForKey: @"displayNumbers"]];
+        [displayHalos setState: [defaults boolForKey: @"displayHalos"]];
+    }
     
     return configSheet;
+}
+
+- (IBAction)displayNumbers:(id)sender
+{
+    if (![displayNumbers state])
+    {
+        [numberMorningColorWell setEnabled: NO];
+        [numberAfternoonColorWell setEnabled: NO];
+    }
+    else
+    {
+        [numberMorningColorWell setEnabled: YES];
+        [numberAfternoonColorWell setEnabled: YES];
+    }
 }
 
 - (IBAction)saveConfig:(id)sender
@@ -142,51 +162,20 @@ static NSString * const BinaryClockName = @"Mageekbox.BinaryClock";
     NSColor *numberAfternoonColor = [numberAfternoonColorWell color];
     NSColor *ledMorningColor = [ledMorningColorWell color];
     NSColor *ledAfternoonColor = [ledAfternoonColorWell color];
-    
-    ScreenSaverDefaults *defaults = [ScreenSaverDefaults defaultsForModuleWithName: BinaryClockName];
 
-    [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: numberMorningColor] forKey: @"numberMorningColor"];
-	[defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: numberAfternoonColor] forKey: @"numberAfternoonColor"];
-    [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledMorningColor] forKey: @"ledMorningColor"];
-    [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledAfternoonColor] forKey: @"ledAfternoonColor"];
-    [defaults setBool: [timeAsBackgroundColor state] forKey: @"timeAsBackgroundColor"];
-    [defaults setBool: [displayNumbers state] forKey: @"displayNumbers"];
-    [defaults setBool: [displayHalos state] forKey: @"displayHalos"];
-    
-    [defaults synchronize];
-    
-    [qtz setValue: numberMorningColor forInputKey: @"numberMorningColor"];
-    [qtz setValue: numberAfternoonColor forInputKey: @"numberAfternoonColor"];
-    [qtz setValue: ledMorningColor forInputKey: @"ledMorningColor"];
-    [qtz setValue: ledAfternoonColor forInputKey: @"ledAfternoonColor"];
-    
-    if ([defaults boolForKey: @"displayNumbers"])
+    if (defaults)
     {
-        [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayNumbers"];
-    }
-    else
-    {
-        [qtz setValue: [NSNumber numberWithBool: NO] forInputKey: @"displayNumbers"];
+        [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: numberMorningColor] forKey: @"numberMorningColor"];
+        [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: numberAfternoonColor] forKey: @"numberAfternoonColor"];
+        [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledMorningColor] forKey: @"ledMorningColor"];
+        [defaults setObject: [NSKeyedArchiver archivedDataWithRootObject: ledAfternoonColor] forKey: @"ledAfternoonColor"];
+        [defaults setBool: [timeAsBackgroundColor state] forKey: @"timeAsBackgroundColor"];
+        [defaults setBool: [displayNumbers state] forKey: @"displayNumbers"];
+        [defaults setBool: [displayHalos state] forKey: @"displayHalos"];
+        
+        [defaults synchronize];
     }
     
-    if ([defaults boolForKey: @"displayHalos"])
-    {
-        [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"displayHalos"];
-    }
-    else
-    {
-        [qtz setValue: [NSNumber numberWithBool: NO]  forInputKey: @"displayHalos"];
-    }
-    
-    if ([defaults boolForKey: @"timeAsBackgroundColor"])
-    {
-        [qtz setValue: [NSNumber numberWithBool: YES] forInputKey: @"timeAsBackgroundColor"];
-    }
-    else
-    {
-        [qtz setValue: [NSNumber numberWithBool: NO] forInputKey: @"timeAsBackgroundColor"];
-    }
-
     [[NSApplication sharedApplication] endSheet:configSheet];
 }
 

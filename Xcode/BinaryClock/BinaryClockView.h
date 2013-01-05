@@ -11,7 +11,8 @@
 
 @interface BinaryClockView : ScreenSaverView
 {
-    QCView* qtz;
+    QCView *qtz;
+    ScreenSaverDefaults *defaults;
     
     IBOutlet id configSheet;
     IBOutlet NSButton *timeAsBackgroundColor;
