@@ -10,6 +10,6 @@ After that, you can now select it in your System preferences in the pane `Deskto
 
 You can also double-click on the `BinaryClock.saver` package in the Finder to install a compiled version of the screensaver, ie with a more beautiful configuration panel than the `.qtz` version.  
 
-![screenshot](http://mageekguy.github.com/BinaryClock/configpane.jpg)
+![screenshot](http://mageekguy.github.com/BinaryClock/confpane.jpg)
 
 Source code of the compiled version is available in the `Xcode` directory.
