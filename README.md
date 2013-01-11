@@ -1,6 +1,6 @@
 # Binary Clock
 
-![screenshot](mageekguy.github.com/BinaryClock/screenshot.jpg)
+![screenshot](http://mageekguy.github.com/BinaryClock/screenshot.jpg)
 
 A binary clock made with [Quartz Composer](https://developer.apple.com/technologies/mac/graphics-and-animation.html).  
 To use it as a screen saver on Mac OS X, just put the file `BinaryClock.qtz` in `/System/Library/Screen Savers/` or in `~/Library/Screen Savers/`.  
